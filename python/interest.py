@@ -26,34 +26,41 @@ def data_scientist_who_like(target_interest):
 print(data_scientist_who_like('Big Data'))
 
 # empty dict
-user_by_interests = defaultdict(list)
+users_by_interest = defaultdict(list)
 
 # key is interest, value is array of userId
 for userId, interest in interests:
-	user_by_interests[interest].append(userId)
+	users_by_interest[interest].append(userId)
 
 # empty dict
-interest_by_users = defaultdict(list)
+interests_by_user = defaultdict(list)
 
 # key is interest, value is array of userId
 for userId, interest in interests:
-	interest_by_users[userId].append(interest)
+	interests_by_user[userId].append(interest)
 
 # return mutual interest between 2 users
 def mutual_interest(user, other):
-	mutual = [x for x in interest_by_users[user] if x in interest_by_users[other]]
+	mutual = [x for x in interests_by_user[user] if x in interests_by_user[other]]
 	return mutual
 
 # return user who like the same thing as given user
-def data_scientist_you_should_know(user):
+def most_common_user(user):
 	users = []
 	cnt = Counter()
-	for interest_user in interest_by_users[user]:
-		for user_interest in user_by_interests[interest_user]:
+	for interest_user in interests_by_user[user]:
+		for user_interest in users_by_interest[interest_user]:
 			if user_interest != user:
 				cnt[user_interest] += 1
 				users.append(user_interest)
 	return cnt
 
-print(data_scientist_you_should_know(0))
+print(most_common_user(0))
 print(mutual_interest(0, 9))
+
+# find user who has the most common interest with a given user
+# def most_common_user(user):
+#	return Counter(interested_by_user
+#		for interest in interests_by_user[user]
+#		for interested_by_user in users_by_interest[interest]
+#		if interested_by_user != user )
