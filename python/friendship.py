@@ -78,7 +78,6 @@ def friends_of_friends(user):
 			if f not in friends and f not in friends_user and f != user :
 				cnt[f] = len(mutual_friend(user, f))
 				friends.append(cnt)
-
 	return cnt
 
 print(friends_of_friends(3))

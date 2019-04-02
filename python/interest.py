@@ -1,4 +1,5 @@
 from collections import defaultdict
+from collections import Counter
 
 interests = [
 	(0, "Hadoop"), (0, "Big Data"), (0, "HBase"), (0, "Java"), (0, "Spark"), (0, "Storm"),(0, "Cassandra"),
@@ -13,8 +14,7 @@ interests = [
 	(9, "Hadoop"), (9, "Java"), (9, "MapReduce"), (9, "Big Data")
 ]
 
-
-
+# return user by his interest
 def data_scientist_who_like(target_interest):
 	scientists = []
 	for interest in interests:
@@ -26,11 +26,11 @@ def data_scientist_who_like(target_interest):
 print(data_scientist_who_like('Big Data'))
 
 # empty dict
-user_by_interest = defaultdict(list)
+user_by_interests = defaultdict(list)
 
 # key is interest, value is array of userId
 for userId, interest in interests:
-	user_by_interest[interest].append(userId)
+	user_by_interests[interest].append(userId)
 
 # empty dict
 interest_by_users = defaultdict(list)
@@ -39,4 +39,21 @@ interest_by_users = defaultdict(list)
 for userId, interest in interests:
 	interest_by_users[userId].append(interest)
 
-print(interest_by_users)
+# return mutual interest between 2 users
+def mutual_interest(user, other):
+	mutual = [x for x in interest_by_users[user] if x in interest_by_users[other]]
+	return mutual
+
+# return user who like the same thing as given user
+def data_scientist_you_should_know(user):
+	users = []
+	cnt = Counter()
+	for interest_user in interest_by_users[user]:
+		for user_interest in user_by_interests[interest_user]:
+			if user_interest != user:
+				cnt[user_interest] += 1
+				users.append(user_interest)
+	return cnt
+
+print(data_scientist_you_should_know(0))
+print(mutual_interest(0, 9))
