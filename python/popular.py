@@ -61,4 +61,4 @@ def most_popular_new_interests(interests, max_result = 5):
 
 	return new_interests
 
-print(most_popular_new_interests(users_interests[1]))
+print(most_popular_new_interests(users_interests[1], 7))
